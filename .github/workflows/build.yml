@@ -1,0 +1,23 @@
+name: Build 3D Clouds shader
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar lazurite
+        run: python -m pip install --upgrade pip lazurite
+      - name: Compilar
+        run: bash build.sh
+      - name: Guardar o .mcpack
+        uses: actions/upload-artifact@v4
+        with:
+          name: Moreweather_3DClouds_Shader
+          path: dist/*.mcpack
+          if-no-files-found: error
